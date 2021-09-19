@@ -5,25 +5,31 @@
       <!-- -->
     </v-navigation-drawer>
 
-    <v-app-bar   flat app>
+    <v-app-bar        
+        app>
       <!-- -->
-        <v-app-bar-nav-icon 
-          @click.stop="drawer = !drawer">
-        </v-app-bar-nav-icon>
+      <v-app-bar-nav-icon 
+        @click.stop="drawer = !drawer">
+      </v-app-bar-nav-icon>
 
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-spacer></v-spacer>
-
-        <v-btn >
-          <router-link to="/">Home</router-link>
-        </v-btn>
-
-        <v-btn>
-          <router-link to="/Register">Register</router-link>
-        </v-btn>
+      <v-toolbar-title>Tab-tracker</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon
+        @click="navigateTo('about')">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+      <v-btn icon
+        @click="navigateTo('/')">
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
+      <v-btn icon
+        @click="navigateTo('Login')">
+        <v-icon>mdi-login</v-icon>
+      </v-btn>
+      <v-btn icon
+        @click="navigateTo('Register')">
+        <v-icon>mdi-account-plus</v-icon>
+      </v-btn>
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
@@ -49,6 +55,11 @@ export default ({
     return {
       drawer: false,
       
+    }
+  },
+  methods: {
+    navigateTo(route) {
+      this.$router.push(route)
     }
   },
 })

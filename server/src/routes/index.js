@@ -11,6 +11,7 @@ let routes = (app) => {
   routers.post('/register', 
     AuthenticationControllerPolicy.register,
     AuthenticationController.register)
+  routers.post('/login', AuthenticationController.login)
   routers.post('/upload', controller.upload)
 
   app.use(routers)

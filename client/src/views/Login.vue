@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <panel
-      title="Register">
+      title="Login">
       <v-text-field
           v-model="email"
           :rules="rules"
@@ -22,8 +22,8 @@
         <br v-if="!!errorMsg">
         <v-btn 
           color="primary" 
-          @click="register" >
-          Register
+          @click="login" >
+          Login
         </v-btn>
     </panel>
   </v-layout>
@@ -34,7 +34,7 @@ import AuthenticationService from "../../services/AuthenticationSerivce"
 import Panel from "../components/Panel.vue"
 
 export default {
-  name: 'Register',
+  name: 'Login',
   components: {
     Panel
   },
@@ -49,9 +49,9 @@ export default {
     }
   },
   methods: {
-    async register() {
+    async login() {
       try {
-        await AuthenticationService.register({
+        await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
