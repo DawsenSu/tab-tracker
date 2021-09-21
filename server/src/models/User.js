@@ -1,42 +1,40 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 // eslint-disable-next-line no-unused-vars
-async function hashPassword(user, options) {
+async function hashPassword(user) {
   const SALT_ROUND = 10
   if(!user.changed('password')){
     return
   }
-
-  return bcrypt.hash(user.password, SALT_ROUND)
-    .then((hash) => {
-      user.setDataValue('password',hash)
-    })
+  const hash = await bcrypt.hash(user.password, SALT_ROUND)
+  user.setDataValue('password', hash)
 }
-
-
 
 module.exports =  (sequelize, DataTypes)  =>{
   const User = sequelize.define('User', {
     email : {
-      type: DataTypes.STRING,
-      unique: true
-    },
-    password: DataTypes.STRING
+        type: DataTypes.STRING,
+        unique: true
+      },
+    password: {
+        type: DataTypes.STRING
+      }
     },
     {
       hooks: {
         beforeCreate: hashPassword,
-        beforeUpdate: hashPassword,
-        beforeSave: hashPassword
+        beforeUpdate: hashPassword
+      },
+      instanceMethods: {
+        validPassword: function(pwd) {
+          return bcrypt.compareSync(pwd, this.password)
+        }
       }
-    })
+    }
+  )
 
-  User.prototype.comparePassword = async function (password) {
-    
-    console.log(`${password}-${this.password}`)
-    const result = await bcrypt.compare(password,this.password)
-    console.log(result)
-    return result
+  User.prototype.comparePassword = async function (pwd) {
+    return await bcrypt.compare(pwd, this.password)
   }
 
   return User

@@ -15,20 +15,27 @@
       <v-toolbar-title>Tab-tracker</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon
-        @click="navigateTo('about')">
+        :to = "{name: 'about'}">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-btn icon
-        @click="navigateTo('/')">
+        :to = "{name: '/'}">
         <v-icon>mdi-home</v-icon>
       </v-btn>
       <v-btn icon
-        @click="navigateTo('Login')">
+        v-if="!$store.state.isUserLoggedIn"
+        :to = "{name: 'Login'}">
         <v-icon>mdi-login</v-icon>
       </v-btn>
       <v-btn icon
-        @click="navigateTo('Register')">
+        v-if="!$store.state.isUserLoggedIn"
+        :to = "{name: 'Register'}">
         <v-icon>mdi-account-plus</v-icon>
+      </v-btn>
+        <v-btn icon
+        v-if="$store.state.isUserLoggedIn"
+        @click="logout">
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -60,6 +67,10 @@ export default ({
   methods: {
     navigateTo(route) {
       this.$router.push(route)
+    },
+    logout() {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setUser', null)
     }
   },
 })
