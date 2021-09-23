@@ -5,34 +5,46 @@ import About from '../views/About.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Songs from '../views/Songs.vue'
+import CreateSong from '../views/CreateSong.vue'
+import ViewSong from '../views/ViewSong.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
-    path: '/About',
-    name: 'About',
+    path: '/about',
+    name: 'about',
     component: About
   },
   {
-    path: '/Register',
-    name: 'Register',
+    path: '/register',
+    name: 'register',
     component: Register
   },
   {
-    path: '/Login',
-    name: 'Login',
+    path: '/login',
+    name: 'login',
     component: Login
   },
   {
-    path: '/Songs',
-    name: 'Songs',
+    path: '/songs',
+    name: 'songs',
     component: Songs
+  },
+  {
+    path: '/songs/createsong',
+    name: 'Create-Song',
+    component: CreateSong
+  },
+  {
+    path: '/songs/:songId',
+    name: 'view-song',
+    component: ViewSong
   }
 ]
 

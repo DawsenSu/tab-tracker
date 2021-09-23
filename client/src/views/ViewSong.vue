@@ -1,18 +1,5 @@
 <template>
   <panel title="Songs">
-    <div slot="action">
-      <v-btn
-        fab
-        color="info"
-        medium
-        absolute
-        middle
-        right
-        to="/songs/createsong"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </div>
     <div
       v-for="song in songs"
       :key="song.id"
@@ -32,12 +19,12 @@
               </div>
               <v-btn
                 class="blue-grey white--text mt-4"
-                :to = "{
-              name: 'view-song', 
+                @click="navigateTo({
+              name: 'songs',
               params: {
                 songId: song.id
               }
-            }"
+            })"
               >
                 View</v-btn>
             </v-col>
@@ -69,6 +56,9 @@ export default {
     this.songs = (await SongService.index()).data
   },
   methods: {
+    navigateTo(route) {
+      this.$router.push(route)
+    }
   },
 }
 </script>

@@ -15,14 +15,14 @@
       <v-toolbar-title>Tab-tracker</v-toolbar-title>
       <v-btn 
         plain
-        :to = "{name: 'Songs'}">
+        :to = "{name: 'songs'}">
         <v-icon left>mdi-music-box</v-icon>
         Browser
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn 
         plain
-        :to = "{name: 'About'}">
+        :to = "{name: 'about'}">
         <v-icon left>mdi-magnify</v-icon>
         About
       </v-btn>
@@ -35,14 +35,14 @@
       <v-btn
         plain
         v-if="!$store.state.isUserLoggedIn"
-        :to = "{name: 'Login'}">
+        :to = "{name: 'login'}">
         <v-icon left>mdi-login</v-icon>
         Login
       </v-btn>
       <v-btn
         plain
         v-if="!$store.state.isUserLoggedIn"
-        :to = "{name: 'Register'}">
+        :to = "{name: 'register'}">
         <v-icon left>mdi-account-plus</v-icon>
         Register
       </v-btn>
