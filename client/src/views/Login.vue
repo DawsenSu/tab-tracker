@@ -1,21 +1,27 @@
 <template>
   <panel title="Login">
-    <v-text-field
-      v-model="email"
-      :rules="rules"
-      hint="Enter your email"
-      label="Email"
-    >
-    </v-text-field>
-    <v-text-field
-      v-model="password"
-      :rules="rules"
-      type="password"
-      hint="Enter your password"
-      label="Password"
-    >
-    </v-text-field>
-    <br>
+    <form >
+      <v-text-field
+        v-model="email"
+        :rules="rules"
+        hint="Enter your email"
+        label="Email"
+        @keyup.enter.native="login"
+        autocomplete="username"
+      >
+      </v-text-field>
+      <v-text-field
+        v-model="password"
+        :rules="rules"
+        type="password"
+        hint="Enter your password"
+        label="Password"
+        @keyup.enter.native="login"
+        autocomplete="current-password"
+      >
+      </v-text-field>
+      <br>
+    </form>
     <div
       class="font-weight-medium red--text"
       v-html="errorMsg"
@@ -51,17 +57,17 @@ export default {
   methods: {
     async login () {
       try {
-        const response =  await AuthenticationService.login({
+        const response = await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
         this.errorMsg = null
+        this.$router.push('/Songs')
       } catch (err) {
         this.errorMsg = err.response.data.error
       }
-
     }
   },
   // watch: {

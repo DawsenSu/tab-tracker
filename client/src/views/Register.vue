@@ -1,11 +1,13 @@
 <template>
-  <v-layout column>
-    <panel title="Register">
+  <panel title="Register">
+    <form>
       <v-text-field
         v-model="email"
         :rules="rules"
         hint="Enter your email"
         label="Email"
+        @keyup.enter.native="login"
+        autocomplete="username"
       >
       </v-text-field>
       <v-text-field
@@ -14,23 +16,25 @@
         type="password"
         hint="Enter your password"
         label="Password"
+        @keyup.enter.native="login"
+        autocomplete="current-password"
       >
       </v-text-field>
       <br>
-      <div
-        class="font-weight-medium red--text"
-        v-html="errorMsg"
-      >
-      </div>
-      <br v-if="!!errorMsg">
-      <v-btn
-        color="primary"
-        @click="register"
-      >
-        Register
-      </v-btn>
-    </panel>
-  </v-layout>
+    </form>
+    <div
+      class="font-weight-medium red--text"
+      v-html="errorMsg"
+    >
+    </div>
+    <br v-if="!!errorMsg">
+    <v-btn
+      color="primary"
+      @click="register"
+    >
+      Register
+    </v-btn>
+  </panel>
 </template>
 
 <script>
@@ -60,6 +64,7 @@ export default {
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
         this.errorMsg = null
+        this.$router.push('/Songs')
       } catch (err) {
         this.errorMsg = err.response.data.error
       }

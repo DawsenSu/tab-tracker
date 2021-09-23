@@ -3,6 +3,7 @@ const routers = express.Router()
 const controller = require('../controllers/API_helper')
 const AuthenticationController = require('../controllers/AuthenticationController')
 const AuthenticationControllerPolicy = require('../policies/AuthenticationControllerPolicy')
+const SongController = require('../controllers/SongControllers')
 
 let routes = (app) => {
   routers.get('/files', controller.getListFiles)
@@ -13,6 +14,9 @@ let routes = (app) => {
     AuthenticationController.register)
   routers.post('/login', AuthenticationController.login)
   routers.post('/upload', controller.upload)
+
+  routers.get('/songs', SongController.index)
+  routers.post('/songs', SongController.post)
 
   app.use(routers)
 }

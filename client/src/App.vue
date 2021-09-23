@@ -13,29 +13,45 @@
       </v-app-bar-nav-icon>
 
       <v-toolbar-title>Tab-tracker</v-toolbar-title>
+      <v-btn 
+        plain
+        :to = "{name: 'Songs'}">
+        <v-icon left>mdi-music-box</v-icon>
+        Browser
+      </v-btn>
       <v-spacer></v-spacer>
-      <v-btn icon
-        :to = "{name: 'about'}">
-        <v-icon>mdi-magnify</v-icon>
+      <v-btn 
+        plain
+        :to = "{name: 'About'}">
+        <v-icon left>mdi-magnify</v-icon>
+        About
       </v-btn>
-      <v-btn icon
-        :to = "{name: '/'}">
-        <v-icon>mdi-home</v-icon>
+      <v-btn 
+        plain
+        :to = "{name: ''}">
+        <v-icon left>mdi-home</v-icon>
+        Home
       </v-btn>
-      <v-btn icon
+      <v-btn
+        plain
         v-if="!$store.state.isUserLoggedIn"
         :to = "{name: 'Login'}">
-        <v-icon>mdi-login</v-icon>
+        <v-icon left>mdi-login</v-icon>
+        Login
       </v-btn>
-      <v-btn icon
+      <v-btn
+        plain
         v-if="!$store.state.isUserLoggedIn"
         :to = "{name: 'Register'}">
-        <v-icon>mdi-account-plus</v-icon>
+        <v-icon left>mdi-account-plus</v-icon>
+        Register
       </v-btn>
-        <v-btn icon
+      <v-btn
+        plain
         v-if="$store.state.isUserLoggedIn"
         @click="logout">
-        <v-icon>mdi-logout</v-icon>
+        <v-icon left>mdi-logout</v-icon>
+        Logout
       </v-btn>
     </v-app-bar>
 
@@ -65,12 +81,10 @@ export default ({
     }
   },
   methods: {
-    navigateTo(route) {
-      this.$router.push(route)
-    },
     logout() {
       this.$store.dispatch('setToken', null)
       this.$store.dispatch('setUser', null)
+      this.$router.push('/')
     }
   },
 })
