@@ -28,7 +28,7 @@
       </v-btn>
       <v-btn 
         plain
-        :to = "{name: ''}">
+        :to = "{name: 'home'}">
         <v-icon left>mdi-home</v-icon>
         Home
       </v-btn>

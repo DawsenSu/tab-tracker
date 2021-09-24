@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="mx-2 my-10"
+    class="mx-2 my-2"
     elevation="5"
     outlined
     title

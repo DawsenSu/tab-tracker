@@ -6,9 +6,10 @@
         color="info"
         medium
         absolute
-        middle
+        top
         right
-        to="/songs/createsong"
+        class="mt-12"
+        :to = "{name: 'create-song'}"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
