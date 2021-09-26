@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import SongService from '../services/SongSerivce'
+import SongService from '../services/SongService'
 
 export default {
   data () {

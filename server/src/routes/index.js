@@ -16,7 +16,10 @@ let routes = (app) => {
   routers.post('/upload', controller.upload)
 
   routers.get('/songs', SongController.index)
+  routers.get('/songs/:songId', SongController.show)
   routers.post('/songs', SongController.post)
+  routers.put('/songs/:songId', SongController.put)
+
 
   app.use(routers)
 }

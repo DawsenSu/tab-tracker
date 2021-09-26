@@ -82,8 +82,8 @@
       >
         <v-btn
           color="primary"
-          @click="createsong"
-        >Create</v-btn>
+          @click="updatesong"
+        >Update</v-btn>
         <v-btn
           color="success"
           @click="autofill"
@@ -125,12 +125,8 @@ export default {
     }
   },
   methods: {
-    async createsong () {
+    async updatesong () {
       this.error = null
-
-      // const areAllFieldsFilledIn = Object
-      //   .keys(this.song)
-      //   .every(key => !!this.song[key])
       this.snackbar = !this.valid
       if (!this.valid) {
         this.error = "Please fill in all the required fields"
@@ -138,31 +134,25 @@ export default {
       }
 
       try {
-        await SongService.post(this.song)
+        await SongService.put(this.song)
+
+        const songId = this.$store.state.route.params.songId
         this.$router.push({
-          name: 'songs'
+          name: 'songs',
+          params: {
+            songId: songId
+          }
         })
       } catch (err) {
         console.log(err)
         this.error = err
       }
-    },
-    //#region 
-    autofill () {
-      var faker = require('faker')
-      this.song = {
-        title: faker.lorem.word(),
-        artist: faker.fake("{{name.lastName}}, {{name.firstName}} {{name.suffix}}"),
-        genre: faker.music.genre(),
-        album: faker.lorem.words(),
-        albumImageUrl: faker.image.image(),
-        youtubeId: faker.hacker.phrase(),
-        lyrics: faker.lorem.paragraphs(),
-        tab: faker.lorem.sentences()
-      };
     }
-    //#endregion
-  }
+  },
+  async mounted() {
+    const songId = this.$store.state.route.params.songId
+    this.song = (await SongService.show(songId)).data
+  },
 }
 </script>
 
