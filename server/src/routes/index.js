@@ -4,6 +4,7 @@ const controller = require('../controllers/API_helper')
 const AuthenticationController = require('../controllers/AuthenticationController')
 const AuthenticationControllerPolicy = require('../policies/AuthenticationControllerPolicy')
 const SongController = require('../controllers/SongControllers')
+const BookmarkController = require('../controllers/BookmarkController')
 
 let routes = (app) => {
   routers.get('/files', controller.getListFiles)
@@ -20,6 +21,9 @@ let routes = (app) => {
   routers.post('/songs', SongController.post)
   routers.put('/songs/:songId', SongController.put)
 
+  routers.get('/bookmarks', BookmarkController.index)
+  routers.post('/bookmarks', BookmarkController.post)
+  routers.delete('/bookmarks/:bookmarkId', BookmarkController.delete)
 
   app.use(routers)
 }

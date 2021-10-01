@@ -1,55 +1,61 @@
 <template>
   <v-app>
-    <v-navigation-drawer      
-      v-model="drawer" app>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
       <!-- -->
     </v-navigation-drawer>
 
-    <v-app-bar        
-        app>
+    <v-app-bar app>
       <!-- -->
-      <v-app-bar-nav-icon 
-        @click.stop="drawer = !drawer">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer">
       </v-app-bar-nav-icon>
 
       <v-toolbar-title>Tab-tracker</v-toolbar-title>
-      <v-btn 
+      <v-btn
         plain
-        :to = "{name: 'songs'}">
-        <v-icon left>mdi-music-box</v-icon>
-        Browser
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn 
-        plain
-        :to = "{name: 'about'}">
-        <v-icon left>mdi-magnify</v-icon>
-        About
-      </v-btn>
-      <v-btn 
-        plain
-        :to = "{name: 'home'}">
+        :to="{name: 'home'}"
+      >
         <v-icon left>mdi-home</v-icon>
         Home
       </v-btn>
       <v-btn
         plain
+        :to="{name: 'songs'}"
+      >
+        <v-icon left>mdi-music-box</v-icon>
+        Browser
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn
+        plain
+        :to="{name: 'about'}"
+      >
+        <v-icon left>mdi-magnify</v-icon>
+        About
+      </v-btn>
+      <v-btn
+        plain
         v-if="!$store.state.isUserLoggedIn"
-        :to = "{name: 'login'}">
+        :to="{name: 'login'}"
+      >
         <v-icon left>mdi-login</v-icon>
         Login
       </v-btn>
       <v-btn
         plain
         v-if="!$store.state.isUserLoggedIn"
-        :to = "{name: 'register'}">
+        :to="{name: 'register'}"
+      >
         <v-icon left>mdi-account-plus</v-icon>
-        Register
+        Sign Up
       </v-btn>
       <v-btn
         plain
         v-if="$store.state.isUserLoggedIn"
-        @click="logout">
+        @click="logout"
+      >
         <v-icon left>mdi-logout</v-icon>
         Logout
       </v-btn>
@@ -74,14 +80,14 @@
 <script>
 
 export default ({
-  data() {
+  data () {
     return {
       drawer: false,
-      
+
     }
   },
   methods: {
-    logout() {
+    logout () {
       this.$store.dispatch('setToken', null)
       this.$store.dispatch('setUser', null)
       this.$router.push('/')

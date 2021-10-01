@@ -10,7 +10,7 @@ namespace HttpClient
         {
             var client = new System.Net.Http.HttpClient();
 
-            var content = await client.GetStringAsync("http://localhost:8081/songs");
+            var content = await client.GetStringAsync("http://localhost:8081/songs/2");
 
             Console.WriteLine(content);
         }

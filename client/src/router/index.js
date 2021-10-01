@@ -51,6 +51,10 @@ const routes = [
     path: '/songs/:songId',
     name: 'edit-song',
     component: EditSong
+  },
+  {
+    path: '*',
+    redirect: 'songs'
   }
 ]
 

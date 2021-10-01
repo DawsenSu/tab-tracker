@@ -1,6 +1,6 @@
 <template>
   <panel title="Login">
-    <form >
+    <form>
       <v-text-field
         v-model="email"
         :rules="rules"
@@ -22,12 +22,13 @@
       </v-text-field>
       <br>
     </form>
-    <div
-      class="font-weight-medium red--text"
-      v-html="errorMsg"
+    <v-snackbar
+      color="error"
+      v-model="snackbar"
+      timeout="2000"
     >
-    </div>
-    <br v-if="!!errorMsg">
+      {{ errorMsg }}
+    </v-snackbar>
     <v-btn
       color="primary"
       @click="login"
@@ -51,6 +52,7 @@ export default {
       rules: [
         value => !!value || 'Require.'
       ],
+      snackbar: false,
       errorMsg: null
     }
   },
@@ -67,6 +69,7 @@ export default {
         this.$router.push('/songs')
       } catch (err) {
         this.errorMsg = err.response.data.error
+        this.snackbar = true
       }
     }
   },

@@ -29,15 +29,31 @@
                   <div class="body-1">
                     {{ song.genre }}
                   </div>
-                  <v-btn
-                    class="blue-grey white--text mt-4"
-                    :to="{
+                  <div
+                    class="mt-4"
+                    align="center"
+                  >
+                    <v-btn
+                      class="blue-grey white--text"
+                      :to="{
                             name: 'edit-song', 
-                            params: {
-                              songId: song.id
+                            params() {
+                              return {
+                                songId : song.id
+                              }
                             }
                           }"
-                  >Edit</v-btn>
+                    >Edit</v-btn>
+                    <v-btn
+                      v-if="isUserLoggedIn"
+                      icon
+                      class="mx-4"
+                      color="success"
+                      @click="setBookmark"
+                    >
+                      <v-icon>{{ bookmarkIconName }}</v-icon>
+                    </v-btn>
+                  </div>
                 </v-col>
                 <v-col
                   cols="6"
@@ -106,21 +122,71 @@
 </template>
 
 <script>
+import Panel from '../components/Panel.vue'
 import SongService from '../services/SongService'
+import BookmarkSerivce from '../services/BookmarkService'
+import { mapState } from 'vuex'
 
 export default {
+  components: { Panel },
   data () {
     return {
-      song: {}
+      song: {},
+      bookmarkIconName: null,
+      bookmark: null
     }
   },
   async mounted () {
     const songId = this.$store.state.route.params.songId
     this.song = (await SongService.show(songId)).data
   },
+  computed: {
+    ...mapState([
+      'isUserLoggedIn'
+    ])
+  },
+  watch: {
+    song: async function () {
+      if (!this.isUserLoggedIn) {
+        return
+      }
+      try {
+        const userId = this.$store.state.user.id
+        const songId = this.$store.state.route.params.songId
+
+        this.bookmark = (await BookmarkSerivce.index({
+          songId: songId,
+          userId: userId
+        })).data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    bookmark: function () {
+      this.bookmarkIconName = this.bookmark ? "mdi-bookmark-check" : "mdi-bookmark-minus"
+    }
+  },
   methods: {
     ready (event) {
       this.player = event.target
+    },
+    async setBookmark () {
+      const userId = this.$store.state.user.id
+      const songId = this.$store.state.route.params.songId
+
+      try {
+        if (!this.bookmark) {
+          this.bookmark = (await BookmarkSerivce.post({
+            songId: songId,
+            userId: userId
+          })).data
+        } else {
+          await BookmarkSerivce.delete(this.bookmark.id)
+          this.bookmark = null
+        }
+      } catch (error) {
+        return { errorMsg: error }
+      }
     }
   },
 }
